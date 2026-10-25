@@ -154,51 +154,52 @@
     position: relative;
     margin-top: auto;
     margin-bottom: 30px;
-    min-height: 0;
-    padding: 20px 54px 20px 24px;
+    padding: 16px 48px 16px 20px;
 
     display: flex;
     align-items: center;
 
+    min-height: 82px;
+
     border: 1px solid var(--gold);
     border-radius: 14px;
 
-    background:
-        linear-gradient(135deg, rgba(228,174,104,.12), rgba(255,255,255,.025)),
-        rgba(8, 13, 15, .82);
+    background: rgba(8, 13, 15, 0.82);
 
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.35),
-        inset 0 0 25px rgba(228,174,104,.025);
+    box-shadow: 0 12px 35px rgba(0,0,0,.35);
 
     cursor: pointer;
     transition: .2s ease;
 }
-
     .liquid-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 15px 45px rgba(0,0,0,.35);
     }
 
     .liquid-card h2 {
-        margin: 0 0 8px;
-        font-size: 21px;
-        letter-spacing: 2px;
-    }
+    margin: 0 0 5px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+}
 
     .liquid-card p {
-        margin: 0;
-        max-width: 360px;
-        color: var(--muted);
-        line-height: 1.55;
-    }
+    margin: 0;
+    max-width: 360px;
+    color: var(--muted);
+    line-height: 1.4;
+    font-size: 13px;
+}
 
     .arrow {
-        float: right;
-        color: var(--gold-light);
-        font-size: 28px;
-        margin-top: -35px;
-    }
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    color: var(--gold-light);
+    font-size: 30px;
+    line-height: 1;
+}
 
     /* ---------- LIQUID SCREEN ---------- */
 
