@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 220">
+<defs>
+  <linearGradient id="silver" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffffff"/>
+    <stop offset=".5" stop-color="#f3f1ed"/>
+    <stop offset="1" stop-color="#d0cfcb"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#ffc36f"/>
+    <stop offset="1" stop-color="#dc9340"/>
+  </linearGradient>
+
+  <!-- The exact 3 silhouette used both for the visible 3 and the V/B cutout.
+       The cutout uses a tiny clearance around it. -->
+  <path id="three"
+    d="M347 6
+       Q347 0 354 0 H386
+       Q398 0 398 11
+       Q398 20 390 24
+       Q399 28 399 39
+       Q399 52 387 52 H354
+       Q347 52 347 45
+       H359
+       Q359 40 365 40 H381
+       Q386 40 386 35
+       Q386 30 381 30 H362 V20 H381
+       Q386 20 386 15
+       Q386 10 381 10 H365
+       Q359 10 359 15 H347 Z"/>
+
+  <mask id="logoMask" maskUnits="userSpaceOnUse" x="0" y="0" width="820" height="220">
+    <rect width="820" height="220" fill="white"/>
+    <!-- slightly enlarged 3 silhouette becomes negative space in V/B -->
+    <use href="#three" fill="black" transform="translate(-4,-4) scale(1.02)"/>
+  </mask>
+</defs>
+
+<!-- C -->
+<path fill="url(#silver)" d="M38 48Q38 28 58 28H174V66H78V154H174V192H58Q38 192 38 172Z"/>
+
+<!-- V -->
+<path fill="url(#silver)" mask="url(#logoMask)"
+ d="M196 28H239L286 132L327 42
+    L344 28H365L306 192H266Z"/>
+
+<!-- B -->
+<path fill="url(#silver)" mask="url(#logoMask)"
+ d="M386 28H496Q538 28 538 67Q538 91 519 103Q542 115 542 151Q542 192 496 192H386Z
+    M428 66V91H486Q498 91 498 78Q498 66 486 66Z
+    M428 123V154H490Q502 154 502 138Q502 123 490 123Z"/>
+
+<!-- E -->
+<path fill="url(#silver)" d="M574 28H782V66H616V91H758V128H616V154H782V192H574Z"/>
+
+<!-- The 3 sits in the negative-space cutout -->
+<use href="#three" fill="url(#gold)"/>
+</svg>
