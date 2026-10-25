@@ -84,25 +84,32 @@
     /* ---------- LOGO ---------- */
 
     .brand {
-        position: relative;
-        display: inline-block;
-        font-size: clamp(42px, 12vw, 64px);
-        font-weight: 800;
-        letter-spacing: -4px;
-        line-height: .9;
-        color: #f4f1eb;
-    }
+    position: relative;
+    display: inline-block;
+    font-size: clamp(42px, 12vw, 64px);
+    font-weight: 800;
+    letter-spacing: -4px;
+    line-height: .9;
+    color: #f4f1eb;
+}
 
-    .brand-three {
-        position: absolute;
-        left: 53%;
-        top: -22px;
-        transform: translateX(-50%);
-        font-size: .30em;
-        letter-spacing: 0;
-        color: var(--gold);
-        font-weight: 800;
-    }
+.brand-letters {
+    display: block;
+    white-space: nowrap;
+}
+
+.brand-three {
+    position: absolute;
+    left: 52%;
+    top: -0.34em;
+    transform: translateX(-50%);
+    font-size: .28em;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--gold);
+    font-weight: 800;
+    pointer-events: none;
+}
 
     .home-brand {
         text-align: center;
@@ -521,9 +528,9 @@
 
         <div class="home-brand">
             <div class="brand">
-                CVBE
-                <span class="brand-three">3</span>
-            </div>
+    <span class="brand-letters">CVBE</span>
+    <span class="brand-three">3</span>
+</div>
 
             <div class="tagline">
                 Convert · Compare · Calculate
