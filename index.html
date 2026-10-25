@@ -1,1 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#090d0e">
+<title>CV³BE — Liquid Gas</title>
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    :root {
+        --bg: #080c0d;
+        --panel: #101617;
+        --panel-2: #151c1d;
+        --line: rgba(255,255,255,.11);
+        --text: #f2f0eb;
+        --muted: #9ea5a3;
+        --gold: #e4ae68;
+        --gold-light: #f1c98f;
+        --danger: #b83232;
+    }
+
+    html, body {
+        margin: 0;
+        min-height: 100%;
+        background:
+            radial-gradient(circle at 50% -10%, rgba(228,174,104,.10), transparent 35%),
+            var(--bg);
+        color: var(--text);
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+        padding: 18px;
+    }
+
+    button,
+    input,
+    select {
+        font: inherit;
+    }
+
+    .app {
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    /* ---------- HEADER ---------- */
+
+    .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 58px;
+        margin-bottom: 8px;
+    }
+
+    .back {
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 24px;
+        display: none;
+    }
+
+    .settings {
+        width: 42px;
+        height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+        color: var(--gold-light);
+        font-size: 20px;
+    }
+
+    /* ---------- LOGO ---------- */
+
+    .brand {
+        position: relative;
+        display: inline-block;
+        font-size: clamp(42px, 12vw, 64px);
+        font-weight: 800;
+        letter-spacing: -4px;
+        line-height: .9;
+        color: #f4f1eb;
+    }
+
+    .brand-three {
+        position: absolute;
+        left: 53%;
+        top: -22px;
+        transform: translateX(-50%);
+        font-size: .30em;
+        letter-spacing: 0;
+        color: var(--gold);
+        font-weight: 800;
+    }
+
+    .home-brand {
+        text-align: center;
+        margin: 38px 0 10px;
+    }
+
+    .tagline {
+        margin-top: 18px;
+        color: #d2d0ca;
+        font-size: 11px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+    }
+
+    /* ---------- HOME ---------- */
+
+    .home-hero {
+        min-height: 72vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .liquid-card {
+        margin-top: auto;
+        margin-bottom: 30px;
+        padding: 26px;
+        border: 1px solid var(--gold);
+        border-radius: 18px;
+        background:
+            linear-gradient(135deg, rgba(228,174,104,.10), rgba(255,255,255,.025)),
+            var(--panel);
+        cursor: pointer;
+        transition: .2s ease;
+    }
+
+    .liquid-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 45px rgba(0,0,0,.35);
+    }
+
+    .liquid-card h2 {
+        margin: 0 0 8px;
+        font-size: 21px;
+        letter-spacing: 2px;
+    }
+
+    .liquid-card p {
+        margin: 0;
+        max-width: 360px;
+        color: var(--muted);
+        line-height: 1.55;
+    }
+
+    .arrow {
+        float: right;
+        color: var(--gold-light);
+        font-size: 28px;
+        margin-top: -35px;
+    }
+
+    /* ---------- LIQUID SCREEN ---------- */
+
+    .screen {
+        display: none;
+    }
+
+    .screen.active {
+        display: block;
+    }
+
+    .section-title {
+        margin: 10px 0 4px;
+        font-size: 24px;
+        letter-spacing: 3px;
+    }
+
+    .section-subtitle {
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+    }
+
+    .section {
+        margin-bottom: 18px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(16,22,23,.88);
+    }
+
+    .section-heading {
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        color: #e8e5df;
+    }
+
+    /* ---------- GAS SELECTOR ---------- */
+
+    .gas-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 6px;
+    }
+
+    .gas-button {
+        min-width: 0;
+        padding: 10px 4px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: #111718;
+        color: var(--text);
+        cursor: pointer;
+        transition: .18s ease;
+    }
+
+    .gas-button strong {
+        display: block;
+        font-size: 16px;
+    }
+
+    .gas-button span {
+        display: block;
+        margin-top: 5px;
+        font-size: 8px;
+        color: var(--muted);
+    }
+
+    .gas-button.active {
+        border-color: var(--gas-color);
+        background: color-mix(in srgb, var(--gas-color) 16%, #111718);
+        box-shadow: inset 0 0 0 1px var(--gas-color);
+    }
+
+    /* ---------- INPUTS ---------- */
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        color: #b8bfbd;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .convert-grid {
+        display: grid;
+        grid-template-columns: 1fr 36px 1fr;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .input-group {
+        min-width: 0;
+    }
+
+    input,
+    select {
+        width: 100%;
+        height: 50px;
+        border: 1px solid #30393a;
+        border-radius: 9px;
+        background: #0b1011;
+        color: var(--text);
+        padding: 0 12px;
+        outline: none;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: var(--gold);
+    }
+
+    .unit-row {
+        display: grid;
+        grid-template-columns: 1fr 90px;
+    }
+
+    .unit-row input {
+        border-radius: 9px 0 0 9px;
+    }
+
+    .unit-row select {
+        border-left: 0;
+        border-radius: 0 9px 9px 0;
+    }
+
+    .swap {
+        width: 36px;
+        height: 36px;
+        border: 0;
+        background: transparent;
+        color: var(--gold-light);
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .helper {
+        margin-top: 7px;
+        color: #777f7d;
+        font-size: 10px;
+    }
+
+    /* ---------- REFERENCE ---------- */
+
+    .reference {
+        margin-top: 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .reference-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 10px;
+        border-bottom: 1px solid var(--line);
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .reference-row:last-child {
+        border-bottom: 0;
+    }
+
+    .reference-row span {
+        color: #d6d4ce;
+    }
+
+    /* ---------- COMMERCIAL ---------- */
+
+    .commercial-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .equivalents {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 7px;
+    }
+
+    .equivalent {
+        padding: 13px 7px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        text-align: center;
+        background: #0c1112;
+    }
+
+    .equivalent strong {
+        display: block;
+        font-size: 16px;
+    }
+
+    .equivalent span {
+        display: block;
+        margin-top: 4px;
+        font-size: 9px;
+        color: var(--muted);
+    }
+
+    /* ---------- CALCULATE ---------- */
+
+    .calculate {
+        width: 100%;
+        height: 54px;
+        border: 0;
+        border-radius: 11px;
+        background: linear-gradient(135deg, #f0c17f, #d99b53);
+        color: #111;
+        font-weight: 700;
+        letter-spacing: 2px;
+        cursor: pointer;
+        margin-top: 4px;
+    }
+
+    .calculate:active {
+        transform: scale(.99);
+    }
+
+    /* ---------- RESULTS ---------- */
+
+    .results {
+        display: none;
+    }
+
+    .results.show {
+        display: block;
+    }
+
+    .result-header {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.015));
+    }
+
+    .result-header .molecule {
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+    .result-header .name {
+        margin-top: 3px;
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    .result-block {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        margin-bottom: 14px;
+        background: rgba(16,22,23,.88);
+    }
+
+    .result-block h3 {
+        margin: 0 0 13px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    .result-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 7px;
+    }
+
+    .result-card {
+        padding: 14px 7px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        text-align: center;
+        background: #0b1011;
+    }
+
+    .result-card strong {
+        display: block;
+        font-size: 17px;
+    }
+
+    .result-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 9px;
+        margin-top: 5px;
+    }
+
+    .annual-spend {
+        font-size: 30px;
+        font-weight: 700;
+        color: var(--gold-light);
+    }
+
+    .muted {
+        color: var(--muted);
+        font-size: 11px;
+    }
+
+    .result-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 30px;
+    }
+
+    .secondary-button {
+        height: 50px;
+        border: 1px solid var(--gold);
+        border-radius: 10px;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+
+    @media (max-width: 420px) {
+        body {
+            padding: 12px;
+        }
+
+        .gas-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .convert-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .swap {
+            margin: -3px auto;
+            transform: rotate(90deg);
+        }
+
+        .result-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HOME -->
+    <main id="homeScreen" class="screen active home-hero">
+
+        <div class="home-brand">
+            <div class="brand">
+                CVBE
+                <span class="brand-three">3</span>
+            </div>
+
+            <div class="tagline">
+                Convert · Compare · Calculate
+            </div>
+        </div>
+
+        <div class="liquid-card" onclick="openLiquid()">
+            <div class="arrow">›</div>
+
+            <h2>LIQUID GAS</h2>
+
+            <p>
+                Convert between litres, kilograms and Nm³.
+                Compare commercial rates and calculate annual usage.
+            </p>
+        </div>
+
+    </main>
+
+
+    <!-- LIQUID -->
+    <main id="liquidScreen" class="screen">
+
+        <div class="topbar">
+            <button class="back" onclick="showHome()">‹</button>
+
+            <div class="brand" style="font-size:32px;">
+                CVBE
+                <span class="brand-three">3</span>
+            </div>
+
+            <button class="settings">⚙</button>
+        </div>
+
+        <div class="section-title">LIQUID GAS</div>
+
+        <div class="section-subtitle">
+            Convert · Commercial · Usage
+        </div>
+
+
+        <!-- 1. GAS -->
+        <section class="section">
+
+            <div class="section-heading">
+                1. Select Gas
+            </div>
+
+            <div class="gas-grid" id="gasGrid"></div>
+
+        </section>
+
+
+        <!-- 2. CONVERT -->
+        <section class="section">
+
+            <div class="section-heading">
+                2. Convert
+            </div>
+
+            <div class="convert-grid">
+
+                <div class="input-group">
+
+                    <label>From</label>
+
+                    <div class="unit-row">
+                        <input
+                            id="convertValue"
+                            type="number"
+                            inputmode="decimal"
+                            value="1"
+                            oninput="updateConversion()"
+                        >
+
+                        <select id="convertFrom" onchange="updateConversion()">
+                            <option value="L">L</option>
+                            <option value="Nm3">Nm³</option>
+                            <option value="kg">kg</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <button class="swap" onclick="swapUnits()">⇄</button>
+
+
+                <div class="input-group">
+
+                    <label>To</label>
+
+                    <div class="unit-row">
+                        <input
+                            id="convertResult"
+                            type="text"
+                            readonly
+                        >
+
+                        <select id="convertTo" onchange="updateConversion()">
+                            <option value="Nm3">Nm³</option>
+                            <option value="L">L</option>
+                            <option value="kg">kg</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="helper">
+                Normal cubic metres at 15°C and 101.325 kPa
+            </div>
+
+
+            <div class="reference" id="referenceTable"></div>
+
+        </section>
+
+
+        <!-- 3. COMMERCIAL -->
+        <section class="section">
+
+            <div class="section-heading">
+                3. Commercial
+            </div>
+
+            <div class="commercial-grid">
+
+                <div>
+
+                    <label>Cost per</label>
+
+                    <div class="unit-row">
+
+                        <input
+                            id="priceInput"
+                            type="number"
+                            inputmode="decimal"
+                            placeholder="$"
+                            oninput="updateCommercial()"
+                        >
+
+                        <select id="priceUnit" onchange="updateCommercial()">
+                            <option value="L">L</option>
+                            <option value="Nm3">Nm³</option>
+                            <option value="kg">kg</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <label>Equivalent Price</label>
+
+                    <div class="equivalents">
+
+                        <div class="equivalent">
+                            <strong id="priceL">—</strong>
+                            <span>/ L</span>
+                        </div>
+
+                        <div class="equivalent">
+                            <strong id="priceNm3">—</strong>
+                            <span>/ Nm³</span>
+                        </div>
+
+                        <div class="equivalent">
+                            <strong id="priceKg">—</strong>
+                            <span>/ kg</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- 4. USAGE -->
+        <section class="section">
+
+            <div class="section-heading">
+                4. Usage
+            </div>
+
+            <div class="commercial-grid">
+
+                <div>
+
+                    <label>Usage</label>
+
+                    <div class="unit-row">
+
+                        <input
+                            id="usageInput"
+                            type="number"
+                            inputmode="decimal"
+                            placeholder="e.g. 40,000"
+                        >
+
+                        <select id="usageUnit" onchange="updateUsage()">
+                            <option value="Nm3">Nm³</option>
+                            <option value="L">L</option>
+                            <option value="kg">kg</option>
+                        </select>
+
+                    </div>
+
+                    <div class="helper">
+                        Gas consumption amount
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <label>Per</label>
+
+                    <select id="usagePeriod" onchange="updateUsage()">
+                        <option value="week">Week</option>
+                        <option value="month" selected>Month</option>
+                        <option value="year">Year</option>
+                    </select>
+
+                    <div class="helper">
+                        Time period
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <button class="calculate" onclick="calculateResults()">
+            CALCULATE →
+        </button>
+
+    </main>
+
+
+    <!-- RESULTS -->
+    <main id="resultsScreen" class="screen">
+
+        <div class="topbar">
+
+            <button class="back" onclick="openLiquid()">‹</button>
+
+            <div class="brand" style="font-size:32px;">
+                CVBE
+                <span class="brand-three">3</span>
+            </div>
+
+            <button class="settings">⚙</button>
+
+        </div>
+
+
+        <div class="section-title">RESULTS</div>
+
+        <div class="section-subtitle" id="resultGasName">
+            NITROGEN (N₂)
+        </div>
+
+
+        <div class="result-header">
+
+            <div class="molecule" id="resultMolecule">
+                N₂
+            </div>
+
+            <div class="name" id="resultName">
+                Nitrogen · Cryogenic Liquid
+            </div>
+
+        </div>
+
+
+        <section class="result-block">
+
+            <h3>Conversion Summary</h3>
+
+            <div class="reference" id="resultReference"></div>
+
+        </section>
+
+
+        <section class="result-block">
+
+            <h3>Commercial Equivalents</h3>
+
+            <div class="result-grid">
+
+                <div class="result-card">
+                    <strong id="resultPriceL">—</strong>
+                    <span>/ L</span>
+                </div>
+
+                <div class="result-card">
+                    <strong id="resultPriceNm3">—</strong>
+                    <span>/ Nm³</span>
+                </div>
+
+                <div class="result-card">
+                    <strong id="resultPriceKg">—</strong>
+                    <span>/ kg</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="result-block">
+
+            <h3>Usage Summary</h3>
+
+            <div class="muted" id="usageDescription"></div>
+
+            <br>
+
+            <div class="result-grid">
+
+                <div class="result-card">
+                    <strong id="annualNm3">—</strong>
+                    <span>Nm³ / year</span>
+                </div>
+
+                <div class="result-card">
+                    <strong id="annualL">—</strong>
+                    <span>L liquid / year</span>
+                </div>
+
+                <div class="result-card">
+                    <strong id="annualKg">—</strong>
+                    <span>kg / year</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="result-block" id="spendBlock">
+
+            <h3>Annual Spend</h3>
+
+            <div class="annual-spend" id="annualSpend">
+                —
+            </div>
+
+            <div class="muted">
+                Based on entered commercial rate and usage
+            </div>
+
+        </section>
+
+
+        <div class="result-actions">
+
+            <button class="secondary-button" onclick="window.print()">
+                Save
+            </button>
+
+            <button class="calculate" onclick="openLiquid()">
+                NEW CALCULATION
+            </button>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+/*
+=========================================================
+CV³BE — LIQUID GAS CALCULATOR
+=========================================================
+
+Source conversion data supplied from the physical
+characteristics card.
+
+Gas volume:
+Nm³ of gas per kg
+
+Liquid conversion:
+Nm³ of gas per litre of liquid
+
+Reference conditions:
+Gas at 15°C and 101.325 kPa
+
+IMPORTANT:
+These are the values currently supplied for the app.
+=========================================================
+*/
+
+const gases = {
+
+    N2: {
+        name: "Nitrogen",
+        molecule: "N₂",
+        color: "#d8d8d2",
+        nm3PerKg: 0.844,
+        nm3PerL: 0.682
+    },
+
+    O2: {
+        name: "Oxygen",
+        molecule: "O₂",
+        color: "#151515",
+        nm3PerKg: 0.738,
+        nm3PerL: 0.843
+    },
+
+    Ar: {
+        name: "Argon",
+        molecule: "Ar",
+        color: "#075b5b",
+        nm3PerKg: 0.591,
+        nm3PerL: 0.824
+    },
+
+    CO2: {
+        name: "Carbon Dioxide",
+        molecule: "CO₂",
+        color: "#cfc6b8",
+        nm3PerKg: 0.534,
+        nm3PerL: 0.543
+    },
+
+    H2: {
+        name: "Hydrogen",
+        molecule: "H₂",
+        color: "#9e1d1d",
+        nm3PerKg: 11.73,
+        nm3PerL: 0.833
+    },
+
+    He: {
+        name: "Helium",
+        molecule: "He",
+        color: "#684324",
+        nm3PerKg: 5.98,
+        nm3PerL: 0.748
+    }
+
+};
+
+
+let selectedGas = "N2";
+
+
+/* ---------- BASIC HELPERS ---------- */
+
+function gasData() {
+    return gases[selectedGas];
+}
+
+
+function formatNumber(value, decimals = 0) {
+
+    if (!Number.isFinite(value)) {
+        return "—";
+    }
+
+    return new Intl.NumberFormat("en-AU", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
+    }).format(value);
+}
+
+
+function formatMoney(value) {
+
+    if (!Number.isFinite(value)) {
+        return "—";
+    }
+
+    return "$" + value.toLocaleString("en-AU", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+
+/* ---------- NAVIGATION ---------- */
+
+function showScreen(id) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function openLiquid() {
+
+    document.querySelector(".back").style.display = "block";
+
+    renderGasButtons();
+    updateConversion();
+    updateCommercial();
+
+    showScreen("liquidScreen");
+}
+
+
+function showHome() {
+
+    document.querySelector(".back").style.display = "none";
+
+    showScreen("homeScreen");
+}
+
+
+/* ---------- GAS BUTTONS ---------- */
+
+function renderGasButtons() {
+
+    const grid = document.getElementById("gasGrid");
+
+    grid.innerHTML = "";
+
+    Object.entries(gases).forEach(([key, gas]) => {
+
+        const button = document.createElement("button");
+
+        button.className =
+            "gas-button " +
+            (key === selectedGas ? "active" : "");
+
+        button.style.setProperty("--gas-color", gas.color);
+
+        button.innerHTML = `
+            <strong>${gas.molecule}</strong>
+            <span>${gas.name}</span>
+        `;
+
+        button.onclick = () => {
+
+            selectedGas = key;
+
+            renderGasButtons();
+            updateConversion();
+            updateCommercial();
+
+        };
+
+        grid.appendChild(button);
+
+    });
+
+}
+
+
+/* ---------- UNIT CONVERSION ---------- */
+
+/*
+We use Nm³ as the common internal base.
+
+For each gas:
+
+1 kg = nm3PerKg Nm³
+
+1 L liquid = nm3PerL Nm³
+
+Therefore:
+
+L → Nm³:
+L × nm3PerL
+
+Nm³ → L:
+Nm³ ÷ nm3PerL
+
+kg → Nm³:
+kg × nm3PerKg
+
+Nm³ → kg:
+Nm³ ÷ nm3PerKg
+
+L → kg:
+L × nm3PerL ÷ nm3PerKg
+
+kg → L:
+kg × nm3PerKg ÷ nm3PerL
+*/
+
+
+function toNm3(value, unit) {
+
+    const gas = gasData();
+
+    if (unit === "Nm3") {
+        return value;
+    }
+
+    if (unit === "L") {
+        return value * gas.nm3PerL;
+    }
+
+    if (unit === "kg") {
+        return value * gas.nm3PerKg;
+    }
+}
+
+
+function fromNm3(value, unit) {
+
+    const gas = gasData();
+
+    if (unit === "Nm3") {
+        return value;
+    }
+
+    if (unit === "L") {
+        return value / gas.nm3PerL;
+    }
+
+    if (unit === "kg") {
+        return value / gas.nm3PerKg;
+    }
+}
+
+
+function convertValue(value, fromUnit, toUnit) {
+
+    if (!Number.isFinite(value)) {
+        return NaN;
+    }
+
+    const nm3 = toNm3(value, fromUnit);
+
+    return fromNm3(nm3, toUnit);
+}
+
+
+function updateConversion() {
+
+    const value = parseFloat(
+        document.getElementById("convertValue").value
+    );
+
+    const from = document.getElementById("convertFrom").value;
+    const to = document.getElementById("convertTo").value;
+
+    const result = convertValue(value, from, to);
+
+    document.getElementById("convertResult").value =
+        Number.isFinite(result)
+            ? formatNumber(result, 3)
+            : "";
+
+    renderReferenceTable();
+}
+
+
+function swapUnits() {
+
+    const from = document.getElementById("convertFrom");
+    const to = document.getElementById("convertTo");
+
+    const oldFrom = from.value;
+
+    from.value = to.value;
+    to.value = oldFrom;
+
+    updateConversion();
+}
+
+
+/* ---------- REFERENCE TABLE ---------- */
+
+function renderReferenceTable() {
+
+    const gas = gasData();
+
+    const oneL = convertValue(1, "L", "Nm3");
+    const oneLKg = convertValue(1, "L", "kg");
+
+    const oneKgNm3 = convertValue(1, "kg", "Nm3");
+    const oneKgL = convertValue(1, "kg", "L");
+
+    const oneNm3L = convertValue(1, "Nm3", "L");
+    const oneNm3Kg = convertValue(1, "Nm3", "kg");
+
+
+    document.getElementById("referenceTable").innerHTML = `
+
+        <div class="reference-row">
+            <span>1 L</span>
+            <span>= ${formatNumber(oneL, 3)} Nm³</span>
+            <span>= ${formatNumber(oneLKg, 3)} kg</span>
+        </div>
+
+        <div class="reference-row">
+            <span>1 kg</span>
+            <span>= ${formatNumber(oneKgNm3, 3)} Nm³</span>
+            <span>= ${formatNumber(oneKgL, 3)} L</span>
+        </div>
+
+        <div class="reference-row">
+            <span>1 Nm³</span>
+            <span>= ${formatNumber(oneNm3L, 3)} L</span>
+            <span>= ${formatNumber(oneNm3Kg, 3)} kg</span>
+        </div>
+
+    `;
+}
+
+
+/* ---------- COMMERCIAL ---------- */
+
+function getUnitValueInNm3(price, unit) {
+
+    const gas = gasData();
+
+    if (unit === "Nm3") {
+        return price;
+    }
+
+    if (unit === "L") {
+        return price / gas.nm3PerL;
+    }
+
+    if (unit === "kg") {
+        return price / gas.nm3PerKg;
+    }
+}
+
+
+function priceFromNm3(pricePerNm3, unit) {
+
+    const gas = gasData();
+
+    if (unit === "Nm3") {
+        return pricePerNm3;
+    }
+
+    if (unit === "L") {
+        return pricePerNm3 * gas.nm3PerL;
+    }
+
+    if (unit === "kg") {
+        return pricePerNm3 * gas.nm3PerKg;
+    }
+}
+
+
+function updateCommercial() {
+
+    const price = parseFloat(
+        document.getElementById("priceInput").value
+    );
+
+    const unit =
+        document.getElementById("priceUnit").value;
+
+
+    if (!Number.isFinite(price)) {
+
+        document.getElementById("priceL").textContent = "—";
+        document.getElementById("priceNm3").textContent = "—";
+        document.getElementById("priceKg").textContent = "—";
+
+        return;
+    }
+
+
+    const priceNm3 =
+        getUnitValueInNm3(price, unit);
+
+
+    const priceL =
+        priceFromNm3(priceNm3, "L");
+
+    const priceKg =
+        priceFromNm3(priceNm3, "kg");
+
+
+    document.getElementById("priceL").textContent =
+        formatMoney(priceL);
+
+    document.getElementById("priceNm3").textContent =
+        formatMoney(priceNm3);
+
+    document.getElementById("priceKg").textContent =
+        formatMoney(priceKg);
+}
+
+
+/* ---------- USAGE ---------- */
+
+function annualiseUsage(value, period) {
+
+    if (period === "week") {
+        return value * 52;
+    }
+
+    if (period === "month") {
+        return value * 12;
+    }
+
+    return value;
+}
+
+
+function updateUsage() {
+    // Reserved for future live usage calculations.
+}
+
+
+/* ---------- RESULTS ---------- */
+
+function calculateResults() {
+
+    const gas = gasData();
+
+    const usage =
+        parseFloat(
+            document.getElementById("usageInput").value
+        );
+
+    const usageUnit =
+        document.getElementById("usageUnit").value;
+
+    const usagePeriod =
+        document.getElementById("usagePeriod").value;
+
+
+    /*
+    Usage is converted to an annual Nm³ figure.
+    */
+
+    let annualNm3 = NaN;
+
+    if (Number.isFinite(usage)) {
+
+        const periodised =
+            annualiseUsage(usage, usagePeriod);
+
+        annualNm3 =
+            toNm3(periodised, usageUnit);
+    }
+
+
+    const annualL =
+        Number.isFinite(annualNm3)
+            ? fromNm3(annualNm3, "L")
+            : NaN;
+
+
+    const annualKg =
+        Number.isFinite(annualNm3)
+            ? fromNm3(annualNm3, "kg")
+            : NaN;
+
+
+    /* Commercial */
+
+    const price =
+        parseFloat(
+            document.getElementById("priceInput").value
+        );
+
+    const priceUnit =
+        document.getElementById("priceUnit").value;
+
+
+    let annualSpend = NaN;
+
+    if (
+        Number.isFinite(price) &&
+        Number.isFinite(annualNm3)
+    ) {
+
+        const pricePerNm3 =
+            getUnitValueInNm3(price, priceUnit);
+
+        annualSpend =
+            annualNm3 * pricePerNm3;
+    }
+
+
+    /* Populate results */
+
+    document.getElementById("resultMolecule").textContent =
+        gas.molecule;
+
+    document.getElementById("resultName").textContent =
+        `${gas.name} · Cryogenic Liquid`;
+
+    document.getElementById("resultGasName").textContent =
+        `${gas.name.toUpperCase()} (${gas.molecule})`;
+
+
+    /* Reference table */
+
+    const oneL =
+        convertValue(1, "L", "Nm3");
+
+    const oneLKg =
+        convertValue(1, "L", "kg");
+
+    const oneKgNm3 =
+        convertValue(1, "kg", "Nm3");
+
+    const oneKgL =
+        convertValue(1, "kg", "L");
+
+    const oneNm3L =
+        convertValue(1, "Nm3", "L");
+
+    const oneNm3Kg =
+        convertValue(1, "Nm3", "kg");
+
+
+    document.getElementById("resultReference").innerHTML = `
+
+        <div class="reference-row">
+            <span>1 L</span>
+            <span>= ${formatNumber(oneL, 3)} Nm³</span>
+            <span>= ${formatNumber(oneLKg, 3)} kg</span>
+        </div>
+
+        <div class="reference-row">
+            <span>1 kg</span>
+            <span>= ${formatNumber(oneKgNm3, 3)} Nm³</span>
+            <span>= ${formatNumber(oneKgL, 3)} L</span>
+        </div>
+
+        <div class="reference-row">
+            <span>1 Nm³</span>
+            <span>= ${formatNumber(oneNm3L, 3)} L</span>
+            <span>= ${formatNumber(oneNm3Kg, 3)} kg</span>
+        </div>
+
+    `;
+
+
+    /* Prices */
+
+    const priceNm3 =
+        Number.isFinite(price)
+            ? getUnitValueInNm3(price, priceUnit)
+            : NaN;
+
+    const priceL =
+        Number.isFinite(priceNm3)
+            ? priceFromNm3(priceNm3, "L")
+            : NaN;
+
+    const priceKg =
+        Number.isFinite(priceNm3)
+            ? priceFromNm3(priceNm3, "kg")
+            : NaN;
+
+
+    document.getElementById("resultPriceL").textContent =
+        formatMoney(priceL);
+
+    document.getElementById("resultPriceNm3").textContent =
+        formatMoney(priceNm3);
+
+    document.getElementById("resultPriceKg").textContent =
+        formatMoney(priceKg);
+
+
+    /* Usage */
+
+    document.getElementById("usageDescription").textContent =
+        Number.isFinite(usage)
+            ? `Input: ${formatNumber(usage)} ${usageUnit === "Nm3" ? "Nm³" : usageUnit} per ${usagePeriod}`
+            : "No usage entered";
+
+
+    document.getElementById("annualNm3").textContent =
+        formatNumber(annualNm3);
+
+    document.getElementById("annualL").textContent =
+        formatNumber(annualL);
+
+    document.getElementById("annualKg").textContent =
+        formatNumber(annualKg);
+
+
+    /* Annual spend */
+
+    document.getElementById("annualSpend").textContent =
+        formatMoney(annualSpend);
+
+
+    showScreen("resultsScreen");
+}
+
+
+/* ---------- STARTUP ---------- */
+
+renderGasButtons();
+updateConversion();
+
+</script>
+
+</body>
+</html>
